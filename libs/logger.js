@@ -28,12 +28,21 @@ function enrichProperties(properties) {
 };
 
 function prepareLogForConsole(message, properties, dateTime) {
+    let extendedInformation = '';
+    if (properties && properties.ip) {
+        extendedInformation += `[IP: ${properties.ip}`;
+        if (properties.useragent) {
+            extendedInformation += `, UserAgent: ${properties.useragent.browser}`;
+        }
+        extendedInformation += ']';
+    }
+
     for (const key in properties) {
         if (properties.hasOwnProperty(key)) {
             message = message.replace(`{${key}}`, properties[key]);
         }
     }
-    return `[${dateTime.toISOString().slice(0, 10) + 'T' + dateTime.toLocaleTimeString()}] ${message}`;
+    return `[${dateTime.toISOString().slice(0, 10)}T${dateTime.toLocaleTimeString()}]${extendedInformation} ${message}`;
 }
 
 module.exports = {

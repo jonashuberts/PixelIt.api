@@ -14,11 +14,11 @@ module.exports = (connection, log) => {
                         where
                             a.id = ?`, id);
             } catch (error) {
-                log.error("getBMPByID: {error}", error);
+                log.error("getBMPByID: {error}", { error: error });
                 return {};
             }
 
-            return result[0];
+            return result[0][0];
         },
 
         getBMPAll: async () => {
@@ -33,7 +33,7 @@ module.exports = (connection, log) => {
                         join pixel_it_user b on (a.userid  = b.id)
                         left outer join pixel_it_hitcount c on (a.id = c.pixel_id)`);
             } catch (error) {
-                log.error("getBMPAll: {error}", error);
+                log.error("getBMPAll: {error}", { error: error });
                 return {};
             }
 
@@ -54,11 +54,11 @@ module.exports = (connection, log) => {
                         where
                             a.id = (select max(id) from pixel_it_bitmap)`);
             } catch (error) {
-                log.error("getBMPNewst: {error}", error);
+                log.error("getBMPNewst: {error}", { error: error });
                 return {};
             }
 
-            return result[0];
+            return result[0][0];
         },
 
         saveStats: async () => {
@@ -66,7 +66,7 @@ module.exports = (connection, log) => {
             try {
 
             } catch (error) {
-                log.error("saveStats: {error}", error);
+                log.error("saveStats: {error}", { error: error });
                 return {};
             }
 
